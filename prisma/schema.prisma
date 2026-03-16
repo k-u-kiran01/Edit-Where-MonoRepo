@@ -1,0 +1,44 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  id              Int             @id @default(autoincrement())
+  email           String          @unique
+  apiKeys         ApiKey[]
+  rootDirectories RootDirectory[]
+}
+
+model ApiKey {
+  id      Int    @id @default(autoincrement())
+  keyHash String @unique
+  userId  Int
+  user    User   @relation(fields: [userId], references: [id], onDelete: Cascade)
+}
+
+model RootDirectory {
+  id        Int      @id @default(autoincrement())
+  name      String
+  createdAt DateTime @default(now())
+  
+  userId    Int
+  user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  files     File[]
+}
+
+model File {
+  id                  Int      @id @default(autoincrement())
+  filePath            String   // e.g., "/src/utils/api.js"
+  fileHash            String   // SHA-256 hash for sync comparison
+  driveFileId         String?  // Google Drive file ID (optional for now)
+  driveParentFolderId String?  // Google Drive folder ID (optional for now)
+  lastEditedTs        DateTime @updatedAt
+  
+  rootDirectoryId     Int
+  rootDirectory       RootDirectory @relation(fields: [rootDirectoryId], references: [id], onDelete: Cascade)
+}
