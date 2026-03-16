@@ -42,6 +42,11 @@ export const validateOTP = async (req,res) => {
     }
 }
 
+export const logoutController = (req,res) =>{
+    res.clearCookie('jwttoken', { httpOnly: true, secure: true, sameSite: 'strict' });
+    res.status(200).json({ message: "Logout successful" });
+}
+
 export const getKeys = async (req,res) => {
     const {userId, email} = req.user;
     try{
