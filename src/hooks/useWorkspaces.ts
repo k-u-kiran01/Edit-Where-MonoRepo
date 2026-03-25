@@ -45,14 +45,15 @@ export function useWorkspaces() {
     }
   }
 
-  const deleteWorkspace = async (workspaceId:string) => {
-    if(!workspaceId || workspaceId.trim() === ""){
+  const deleteWorkspace = async (workspaceId:string | number) => {
+    
+    if(!workspaceId){
       return;
     }
     try{
       const res = await apiClient('/web/workspaces', {
         method: 'DELETE',
-        body: JSON.stringify({ workspaceId: workspaceId.trim() })
+        body: JSON.stringify({ workspaceId: workspaceId})
       })
       await fetchWorkspaces();
       return 

@@ -4,14 +4,19 @@ import { TopNavbar } from './TopNavbar';
 import { Sidebar } from './Sidebar';
 import { useLoginHook } from '../../hooks/useLoginHook';
 
-export function DashboardLayout() {
+interface DashboardLayoutProps {
+  setIsLoggedIn: React.Dispatch<React.SetStateAction<boolean>>;
+}
+
+export function DashboardLayout({ setIsLoggedIn }:DashboardLayoutProps) {
   const [sidebarCollapsed, setSidebarCollapsed] = useState(false);
   const [searchQuery, setSearchQuery] = useState('');
   const { logout } = useLoginHook();
   const navigate = useNavigate();
-
   const handleLogout = async () => {
     await logout();
+    setIsLoggedIn(false);
+    navigate('/');
   };
 
   return (

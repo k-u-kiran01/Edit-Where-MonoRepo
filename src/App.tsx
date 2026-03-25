@@ -38,7 +38,7 @@ export function App() {
 
         {/* Protected Dashboard Routes (Wrapped in the Layout) */}
         {isLoggedIn ? (
-          <Route element={<DashboardLayout />}>
+          <Route element={isLoggedIn ? <DashboardLayout setIsLoggedIn={setIsLoggedIn} /> : <Navigate to="/" replace /> }>
             {/* /workspaces */}
             <Route path="/workspaces" element={<WorkspaceOverview />} />
             

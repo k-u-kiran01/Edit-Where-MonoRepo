@@ -1,12 +1,10 @@
 import { useState, useEffect, useCallback } from "react";
 import { apiClient } from "../lib/apiClient";
-import { useNavigate } from "react-router-dom";
 export function useLoginHook() {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [authView, setAuthView] = useState<'landing' | 'login'>('landing');
   const [email, setEmail] = useState('');
   const [otp, setOtp] = useState('');
-  const navigate = useNavigate();
   const [isLoading, setIsLoading] = useState(false);
   const [isCheckingSession, setIsCheckingSession] = useState(true); // ⚡ New!
   const backend_url = import.meta.env.VITE_BACKEND_URL;
@@ -85,7 +83,6 @@ export function useLoginHook() {
       setEmail('');
       setOtp('');
       setIsLoading(false);
-      navigate('/');
     }
   };
 
