@@ -6,6 +6,7 @@ import { Readable } from "stream";
 import path from "path";
 import fs from "fs";
 import { uploadFileToDrive } from "../services/driveHelper.js";
+import { retail } from "googleapis/build/src/apis/retail/index.js";
 
 
 export const addProject = async (req,res) => {
@@ -184,5 +185,24 @@ export const addFile = async (req,res) => {
     }catch(error){
         console.error("Failed to Create a File from Web Client:", error);
         return res.status(500).json({ message: "Cannot Create New File" })
+    }
+}
+
+export const deleteProject = async (req,res) => {
+    const { workspaceId } = req.body;
+    if(!workspaceId || isNaN(workspaceId)) 
+        return res.status(400).json({ message:"workspace ID is required" });
+    try{
+        await prisma.rootDirectory.delete({
+            where:{
+                id:workspaceId
+            }
+        });
+        return res.status(200).json({ message:"Workspace deleted successfully" });
+    }catch(error){
+        if(error.code === 'P2025')
+            return res.status(404).json({ message:"Workspace not found" });
+        console.error("Failed to delete workspace:", error);
+        return res.status(500).json({ message:"Internal Server Error" });
     }
 }
