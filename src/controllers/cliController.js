@@ -42,7 +42,7 @@ export const addProject = async (req,res) => {
         const workspace = await prisma.rootDirectory.create({
             data: {
                 name: workspaceName,
-                userId: id
+                userId: userId
             }
         });
         const allLocalFiles = getAllFiles(extractDir);

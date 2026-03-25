@@ -10,7 +10,10 @@ import webRouter from './routes/webRoutes.js';
 import loginRouter from './routes/loginRoutes.js';
 
 const app = express();
-app.use(cors());
+app.use(cors({
+    origin: 'http://localhost:5173',
+    credentials: true
+}));
 app.use(express.json());
 app.use(cookieParser());
 const PORT = process.env.PORT

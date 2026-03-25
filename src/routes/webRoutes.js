@@ -1,10 +1,11 @@
 import { Router } from "express";
-import { getProjects, getProjectFiles, getFileContent, updateFileContent } from "../controllers/user";
+import { getProjects, getProjectFiles, getFileContent, updateFileContent, addProject } from "../controllers/user.js";
 
 const webRouter = Router();
 
-webRouter.get('/projects', getProjects);
-webRouter.get('/projects/:workspaceId', getProjectFiles);
+webRouter.post('/workspaces',addProject);
+webRouter.get('/workspaces', getProjects);
+webRouter.get('/workspaces/:workspaceId', getProjectFiles);
 webRouter.get('/files/:fileId', getFileContent);
 webRouter.put('/files/:fileId', updateFileContent);
 
