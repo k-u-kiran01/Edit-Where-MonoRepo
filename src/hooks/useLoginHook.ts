@@ -6,7 +6,7 @@ export function useLoginHook() {
   const [authView, setAuthView] = useState<'landing' | 'login'>('landing');
   const [email, setEmail] = useState('');
   const [otp, setOtp] = useState('');
-  
+  const navigate = useNavigate();
   const [isLoading, setIsLoading] = useState(false);
   const [isCheckingSession, setIsCheckingSession] = useState(true); // ⚡ New!
   const backend_url = import.meta.env.VITE_BACKEND_URL;
@@ -85,7 +85,6 @@ export function useLoginHook() {
       setEmail('');
       setOtp('');
       setIsLoading(false);
-      const navigate = useNavigate();
       navigate('/');
     }
   };

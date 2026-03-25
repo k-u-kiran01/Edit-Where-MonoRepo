@@ -46,15 +46,21 @@ export function useWorkspaces() {
   }
 
   const deleteWorkspace = async (workspaceId:string) => {
-    if(workspaceId === ""){
+    if(!workspaceId || workspaceId.trim() === ""){
       return;
     }
     try{
-
+      const res = await apiClient('/web/workspaces', {
+        method: 'DELETE',
+        body: JSON.stringify({ workspaceId: workspaceId.trim() })
+      })
+      await fetchWorkspaces();
+      return 
     }catch(error){
       console.error("Failed to delete workspace:", error);
+      throw error;
     }
   }
 
-  return { workspaces, addWorkspace, isLoading, error, refetch: fetchWorkspaces };
+  return { workspaces, addWorkspace, deleteWorkspace, isLoading, error, refetch: fetchWorkspaces };
 }

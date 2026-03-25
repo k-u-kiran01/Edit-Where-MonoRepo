@@ -8,7 +8,7 @@ import { useNavigate } from 'react-router-dom';
 
 export function WorkspaceOverview() {
   // 1. Hook Data (Aliased addWorkshop to addWorkspace just in case you haven't renamed it yet)
-  const { addWorkspace, workspaces, isLoading, error } = useWorkspaces();
+  const { addWorkspace, deleteWorkspace, workspaces, isLoading, error } = useWorkspaces();
   const navigate = useNavigate();
 
   // 2. Modal State
@@ -107,7 +107,7 @@ export function WorkspaceOverview() {
                   key={workspace.id}
                   workspace={workspace}
                   onClick={() => navigate(`/workspaces/${workspace.id}`)} 
-                  onDelete={ ()=> {}}
+                  onDelete={()=> { deleteWorkspace(workspace.id); }}
                 />
               ))}
             </div>
