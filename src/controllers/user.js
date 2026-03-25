@@ -3,6 +3,10 @@ import prisma from "../db.js";
 import driveService from "../config/drive.js";
 import crypto from "crypto";
 import { Readable } from "stream";
+import path from "path";
+import fs from "fs";
+import { uploadFileToDrive } from "../services/driveHelper.js";
+
 
 export const addProject = async (req,res) => {
     const { id:userId } = req.user;
@@ -11,7 +15,7 @@ export const addProject = async (req,res) => {
         return res.status(400).json({ message: "Workspace name is required." });
     }
     try{
-        const newworkspace = await prisma.RootDirectory.create({
+        const newworkspace = await prisma.rootDirectory.create({
             data: {
                 name: name.trim(),
                 userId: userId
@@ -31,7 +35,7 @@ export const addProject = async (req,res) => {
 export const getProjects = async (req,res) => {
     const { id } = req.user;
     try {
-        const projects = await prisma.RootDirectory.findMany({
+        const projects = await prisma.rootDirectory.findMany({
             where: { userId: id },
             select: {
                 id: true,
@@ -84,7 +88,7 @@ export const getFileContent = async (req,res) => {
     }
 
     try {
-        const file = await prisma.File.findUnique({
+        const file = await prisma.file.findUnique({
             where: { id: fileId },
             select: {
                 filePath: true,
@@ -117,7 +121,7 @@ export const updateFileContent = async (req,res) => {
         return res.status(400).json({ message: "File content must be provided." });
     }
     try{
-        const file = await prisma.File.findUnique({
+        const file = await prisma.file.findUnique({
             where: { id: fileId },
             select: {
                 id: true,
@@ -147,3 +151,38 @@ export const updateFileContent = async (req,res) => {
 
 }
  
+export const addFile = async (req,res) => {
+    const workspaceId = parseInt(req.params.workspaceId);
+    const { filePath } = req.body;
+    if(!workspaceId || isNaN(workspaceId)){
+        return res.status(404).json({ message:"Invalid workspace ID" });
+    }
+    if(!filePath && filePath.trim() === '')
+        return res.status(400).json({ message:"Filepath is required" })
+    try{
+        const workspace = await prisma.rootDirectory.findUnique({
+            where: { id:workspaceId }
+        })
+        if(!workspace)
+            return res.status(404).json({ message:"Workspace not found" })
+        const tempFileName = path.basename(filePath);
+        const tempFilePath = path.join(process.cwd(),'uploads',`temp_${Date.now()}_${tempFileName}`);
+        fs.writeFileSync(tempFilePath, "");
+        const driveFileId = await uploadFileToDrive(tempFilePath, tempFileName);
+        const emptyHash = crypto.createHash('sha256').update("").digest('hex');
+
+        const newFile = await prisma.file.create({
+            data:{
+                filePath: filePath,
+                rootDirectoryId: workspaceId,
+                fileHash: emptyHash,
+                driveFileId: driveFileId
+            }
+        })
+        fs.unlinkSync(tempFilePath);
+        return res.status(201).json(newFile);
+    }catch(error){
+        console.error("Failed to Create a File from Web Client:", error);
+        return res.status(500).json({ message: "Cannot Create New File" })
+    }
+}
