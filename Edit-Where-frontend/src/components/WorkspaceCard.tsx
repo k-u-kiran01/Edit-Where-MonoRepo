@@ -83,7 +83,7 @@ export function WorkspaceCard({ workspace, onClick, onDelete }: WorkspaceCardPro
         <div className="flex items-center justify-between mt-2">
           <div className="flex items-center text-sm text-muted-foreground">
             <FileCode2 className="mr-1.5 h-4 w-4" />
-            <span>{workspace.files?.length || 0} files</span>
+            <span>{workspace?.fileCount || 0} files</span>
           </div>
           <Badge
             variant="outline"

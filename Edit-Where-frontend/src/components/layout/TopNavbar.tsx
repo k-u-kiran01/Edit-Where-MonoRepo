@@ -19,7 +19,7 @@ export function TopNavbar({
           <div className="h-5 w-5" />
         </div>
         <span className="font-heading text-lg font-semibold tracking-tight">
-          CollabMate
+          Edit-Where
         </span>
       </div>
 

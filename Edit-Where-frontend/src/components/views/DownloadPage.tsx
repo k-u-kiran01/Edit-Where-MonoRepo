@@ -17,7 +17,7 @@ export function DownloadPage() {
             <FileArchive className="h-8 w-8 text-primary" />
           </div>
           <h1 className="text-3xl md:text-4xl font-bold font-heading tracking-tight text-foreground mb-4">
-            Download CollabMate CLI
+            Download Edit-Where CLI
           </h1>
           <p className="text-lg text-muted-foreground max-w-2xl mx-auto">
             To sync your local code with your web workspaces, you need the CollabMate command-line tool. Choose your operating system below to get started.
