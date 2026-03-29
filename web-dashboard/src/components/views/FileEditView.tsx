@@ -9,7 +9,7 @@ export function FileEditView() {
   const navigate = useNavigate();
 
   const [content, setContent] = useState('');
-  const [filePath, setFilePath] = useState(''); // Store the real path for the UI
+  const [filePath, setFilePath] = useState('');
   const [isLoading, setIsLoading] = useState(true);
   const [isSaving, setIsSaving] = useState(false);
   const [error, setError] = useState<string | null>(null);
@@ -20,7 +20,6 @@ export function FileEditView() {
       setIsLoading(true);
       setError(null);
       try {
-        // Use your clean apiClient!
         const data = await apiClient(`/web/files/${fileId}`);
         setContent(data.content || '');
         setFilePath(data.filePath || 'Unknown File');
@@ -37,7 +36,6 @@ export function FileEditView() {
   const handleSave = async () => {
     setIsSaving(true);
     try {
-      // apiClient automatically handles the headers, URL, and JSON!
       await apiClient(`/web/files/${fileId}`, {
         method: 'PUT',
         body: JSON.stringify({ content }),

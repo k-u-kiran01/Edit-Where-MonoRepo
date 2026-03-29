@@ -8,6 +8,7 @@ import { LandingPage } from './pages/LandingPage';
 import { LoginPage } from './pages/LoginPage';
 import { useLoginHook } from './hooks/useLoginHook';
 import { Loader2 } from 'lucide-react';
+import { DownloadPage } from './components/views/DownloadPage';
 
 export function App() {
   // 1. ALL hooks must be at the very top
@@ -25,6 +26,7 @@ export function App() {
   // 3. App.tsx just maps out the routes, it doesn't navigate itself.
   return (
     <BrowserRouter>
+        
       <Routes>
         {/* Public Routes - Redirect to workspaces if already logged in */}
         <Route 
@@ -35,7 +37,7 @@ export function App() {
           path="/login" 
           element={isLoggedIn ? <Navigate to="/workspaces" replace /> : <LoginPage setIsLoggedIn={setIsLoggedIn}/>} 
         />
-
+        <Route path="/download" element={<DownloadPage />} />
         {/* Protected Dashboard Routes (Wrapped in the Layout) */}
         {isLoggedIn ? (
           <Route element={isLoggedIn ? <DashboardLayout setIsLoggedIn={setIsLoggedIn} /> : <Navigate to="/" replace /> }>
@@ -50,7 +52,7 @@ export function App() {
             
             {/* /api-keys */}
             <Route path="/api-keys" element={<ApiKeysView />} />
-            
+
             {/* Catch-all redirects back to workspaces for logged-in users */}
             <Route path="*" element={<Navigate to="/workspaces" replace />} />
           </Route>

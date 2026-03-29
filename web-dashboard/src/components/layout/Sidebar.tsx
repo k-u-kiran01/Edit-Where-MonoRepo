@@ -29,7 +29,7 @@ export function Sidebar({ collapsed, onToggle }: SidebarProps) {
   const navItems = [
     { id: 'workspaces', label: 'Workspaces', icon: FolderGit2, path: '/workspaces' },
     { id: 'api-keys', label: 'API Keys', icon: KeyRound, path: '/api-keys' },
-    { id: 'settings', label: 'Settings', icon: Settings, path: '/settings' }
+    // { id: 'settings', label: 'Settings', icon: Settings, path: '/settings' }
   ];
 
   return (
@@ -83,7 +83,7 @@ export function Sidebar({ collapsed, onToggle }: SidebarProps) {
 
         {!collapsed && (
           <div className="p-4 mt-auto">
-            <div className="rounded-lg bg-muted/50 p-4 border border-border/50">
+            {/* <div className="rounded-lg bg-muted/50 p-4 border border-border/50">
               <p className="text-xs font-medium text-foreground mb-1">
                 CollabMate CLI
               </p>
@@ -93,7 +93,7 @@ export function Sidebar({ collapsed, onToggle }: SidebarProps) {
               <Button variant="outline" size="xs" className="w-full text-xs h-7">
                 Update Now
               </Button>
-            </div>
+            </div> */}
           </div>
         )}
       </aside>

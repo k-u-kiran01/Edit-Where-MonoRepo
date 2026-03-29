@@ -53,7 +53,6 @@ export function ApiKeysView() {
       setDeleteTarget(null);
     } catch (err) {
       console.error(err);
-      // Optional: Add a toast notification here to show the error
     } finally {
       setIsMutating(false);
     }

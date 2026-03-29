@@ -72,7 +72,6 @@ export function WorkspaceOverview() {
     );
   }
 
-  // --- Main Render ---
   return (
     <>
       <ScrollArea className="h-full w-full">

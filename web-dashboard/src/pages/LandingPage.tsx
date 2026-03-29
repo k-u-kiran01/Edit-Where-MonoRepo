@@ -22,16 +22,12 @@ export function LandingPage() {
           <Button variant="ghost" onClick={onLoginClick}>
             Log in
           </Button>
-          <Button onClick={onLoginClick}>Get Started</Button>
+          <Button onClick={()=>{navigate('/download')}}>Get Started</Button>
         </div>
       </header>
 
       <main className="flex-1 flex flex-col items-center justify-center px-6 py-24 text-center">
-        <div className="inline-flex items-center rounded-full border border-border/50 bg-muted/30 px-3 py-1 text-sm font-medium text-muted-foreground mb-8">
-          <span className="flex h-2 w-2 rounded-full bg-primary mr-2"></span>
-          CollabMate CLI v2.4 is now available
-        </div>
-
+        
         <h1 className="max-w-4xl font-heading text-5xl md:text-7xl font-bold tracking-tight mb-6">
           Sync your local CLI files with the cloud.{' '}
           <span className="text-muted-foreground">Instantly.</span>
@@ -53,9 +49,10 @@ export function LandingPage() {
           <Button
             size="lg"
             variant="outline"
-            className="w-full sm:w-auto text-base h-12 px-8">
+            className="w-full sm:w-auto text-base h-12 px-8"
+            onClick={()=>{navigate('/download')}}>
             
-            View Documentation
+            Get Started
           </Button>
         </div>
 
@@ -74,10 +71,9 @@ export function LandingPage() {
             <div className="h-12 w-12 rounded-lg bg-primary/10 flex items-center justify-center mb-4">
               <Zap className="h-6 w-6 text-primary" />
             </div>
-            <h3 className="text-xl font-bold mb-2">Real-time Sync</h3>
+            <h3 className="text-xl font-bold mb-2">Easy Sync</h3>
             <p className="text-muted-foreground">
-              Changes made in your local CLI are instantly reflected in the
-              cloud. Never worry about outdated files again.
+              Can sync in between Local and Cloud with simple command
             </p>
           </div>
           <div className="p-6 rounded-2xl border border-border/50 bg-card/50">

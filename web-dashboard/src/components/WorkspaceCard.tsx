@@ -7,17 +7,16 @@ import { Workspace } from '../types';
 interface WorkspaceCardProps {
   workspace: Workspace;
   onClick: () => void;
-  // ⚡ 1. Add an onDelete prop so the parent can handle the API call
   onDelete: (id: number | string) => void; 
 }
 
 export function WorkspaceCard({ workspace, onClick, onDelete }: WorkspaceCardProps) {
   const isUpToDate = workspace.status === 'UP_TO_DATE';
   
-  // ⚡ 2. State to manage the dropdown menu visibility
+  // 2. State to manage the dropdown menu visibility
   const [isMenuOpen, setIsMenuOpen] = useState(false);
 
-  // ⚡ 3. Handlers with stopPropagation to prevent navigating when interacting with the menu
+  // 3. Handlers with stopPropagation to prevent navigating when interacting with the menu
   const handleMenuToggle = (e: React.MouseEvent) => {
     e.stopPropagation();
     setIsMenuOpen(!isMenuOpen);
@@ -44,7 +43,7 @@ export function WorkspaceCard({ workspace, onClick, onDelete }: WorkspaceCardPro
           </CardTitle>
         </div>
 
-        {/* ⚡ 4. The 3-Dots Menu Button */}
+        {/* 4. The 3-Dots Menu Button */}
         <div className="absolute right-4 top-4">
           <button 
             onClick={handleMenuToggle}

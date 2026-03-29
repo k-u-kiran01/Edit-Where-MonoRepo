@@ -10,13 +10,8 @@ import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '.
 import { Badge } from '../ui/Badge';
 import { ScrollArea } from '../ui/ScrollArea';
 import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from '../ui/Tooltip';
-
-// ⚡ 1. Import your brand new custom hook
 import { useWorkspaceDetail } from '../../hooks/useWorkspaceDetail'; 
 
-// ----------------------------------------------------------------------
-// Types & Helpers (Unchanged - These are perfect)
-// ----------------------------------------------------------------------
 interface FolderNode {
   name: string;
   path: string;
@@ -71,9 +66,6 @@ function countFiles(node: FolderNode): number {
   return node.files.length + Object.values(node.subfolders).reduce((sum, sub) => sum + countFiles(sub), 0);
 }
 
-// ----------------------------------------------------------------------
-// Sub-Components
-// ----------------------------------------------------------------------
 function FileRow({ file, depth = 0 }: { file: FileItem; depth?: number }) {
   const fileName = file.filePath.split('/').pop() || file.filePath;
   const navigate = useNavigate();
@@ -156,21 +148,13 @@ function FolderSection({ node, depth = 0 }: { node: FolderNode; depth?: number }
   );
 }
 
-// ----------------------------------------------------------------------
-// Main Component
-// ----------------------------------------------------------------------
 export function WorkspaceDetail() {
   const { workspaceId } = useParams();
   const navigate = useNavigate();
-  
-  // ⚡ 2. Destructure everything from the hook! Look how clean this is.
   const { workspace, isLoading, error, createFile, isCreatingFile } = useWorkspaceDetail(workspaceId);
 
-  // ⚡ 3. Local UI state for the modal
   const [isFileModalOpen, setIsFileModalOpen] = useState(false);
   const [newFileName, setNewFileName] = useState('');
-
-  // ⚡ 4. The Submit Handler
   const handleCreateFile = async (e: React.FormEvent) => {
     e.preventDefault();
     if (!newFileName.trim()) return;
@@ -179,7 +163,6 @@ export function WorkspaceDetail() {
       const newFile = await createFile(newFileName);
       setIsFileModalOpen(false);
       setNewFileName('');
-      // Route directly to the new file
       navigate(`/workspaces/${workspaceId}/edit/${newFile.id}`);
     } catch (err) {
       alert("Could not create file. Check console.");
@@ -227,7 +210,7 @@ export function WorkspaceDetail() {
                 </Badge>
               </div>
               
-              {/* ⚡ New File Button */}
+              {/* New File Button */}
               <Button size="sm" onClick={() => setIsFileModalOpen(true)}>
                 <FilePlus className="mr-2 h-4 w-4" />
                 New File
@@ -267,7 +250,7 @@ export function WorkspaceDetail() {
         </div>
       </ScrollArea>
 
-      {/* ⚡ New File Modal Overlay */}
+      {/* New File Modal Overlay */}
       {isFileModalOpen && (
         <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/60 backdrop-blur-sm p-4 animate-in fade-in duration-200">
           <div className="w-full max-w-md rounded-xl border border-border bg-card p-6 shadow-xl animate-in zoom-in-95 duration-200">
