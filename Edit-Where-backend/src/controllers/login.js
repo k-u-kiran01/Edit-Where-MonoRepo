@@ -64,7 +64,7 @@ export const validateOTP = async (req,res) => {
         res.cookie('jwttoken', jwttoken, {
             httpOnly: true,
             secure: isProduction,
-            sameSite: isProduction? 'Strict' : 'Lax',
+            sameSite: isProduction? 'none' : 'Lax',
             maxAge: 3*60*60*1000
         })
         return res.status(200).json({ message: "Login successful", user: { id:user.id, email: user.email }});
