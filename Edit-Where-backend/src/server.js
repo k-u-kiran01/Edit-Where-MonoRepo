@@ -10,8 +10,9 @@ import webRouter from './routes/webRoutes.js';
 import loginRouter from './routes/loginRoutes.js';
 
 const app = express();
+const frontend_url = process.env.FRONTEND_URL;
 app.use(cors({
-    origin: 'http://localhost:5173',
+    origin: frontend_url,
     credentials: true
 }));
 app.use(express.json());
